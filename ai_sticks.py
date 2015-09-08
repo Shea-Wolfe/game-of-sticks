@@ -32,6 +32,8 @@ def ai_turn(ai_dict, sticks):
     return current_guess
 
 def get_ai_dict():
+    '''Takes no input.  Returns a dictionary with keys from 1-100.
+    Value for each key is the same, a list of ints one two and three.'''
     return {key: [1,2,3] for key in range(1,101)}
 
 
