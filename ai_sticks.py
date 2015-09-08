@@ -2,9 +2,15 @@ import random
 def game_setup(players):
     '''Takes one arguement, the players (one or two).
     Gets the player names and how many sticks the game will be played with'''
-    sticks = int(input('Welcome to the game how many sticks are on the table?\nEnter a number between 10-100? > '))
-    player1 = input('Great! player 1 please enter your name > ')
-    player2 = 'Skynet'
+
+    if players == 1:
+        sticks = int(input('Welcome to the game how many sticks are on the table?\nEnter a number between 10-100? > '))
+        player1 = input('Great! player 1 please enter your name > ')
+        player2 = 'Skynet'
+    else:
+        sticks = int(input('Welcome to the game how many sticks are on the table?\nEnter a number between 10-100? > '))
+        player1 = input('Great! player 1 please enter your name > ')
+        player2 = input('Awesome! Player 2 please enter your name > ')
     return (sticks, player1, player2)
 
 def player_move(sticks, player_move):
@@ -28,7 +34,7 @@ def end_game(current_player):
 def ai_turn(ai_dict, sticks):
     '''Takes two arguements, the AI dictionary and the number of sticks in the pile
     returns a random selection from remaining values at that key in the ai dict'''
-    current_guess = random.choice(ai_dict[key])
+    current_guess = random.choice(ai_dict[sticks])
     return current_guess
 
 def get_ai_dict():
@@ -42,7 +48,7 @@ def main():
     check to see if player removed the last stick
     if True, inform player he loses
     else continue'''
-    sticks,player1,player2 = game_setup()
+    sticks,player1,player2 = game_setup(1)
     while sticks > 0:
         sticks_out = int(input('Hi {}!  There are {} sticks remaining \nPlease select a number of sticks, 1-3 > '.format(player1,sticks)))
         while sticks_out not in range(1,4):
@@ -53,7 +59,7 @@ def main():
             if end_game(player1):
                 break
         sticks_out = ai_turn(ai_dict, sticks)
-        sticks = sticks_out(sticks, sticks_out)
+        sticks = player_move(sticks, sticks_out)
         if sticks <1:
             if end_game(player2):
                 break
@@ -62,4 +68,5 @@ def main():
 
 
 if __name__ == '__main__':
+    ai_dict = get_ai_dict()
     main()
