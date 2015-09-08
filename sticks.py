@@ -14,15 +14,34 @@ def game_setup():
     player2 = input('Awesome! Player 2 please enter your name > ')
     return (sticks, player1, player2)
 
-def game_loop(sticks, current_player):
-    player_move = int(input('Hi {}! Please select a number of sticks, 1-3'.format(current_player)))
+def player_move(sticks, player_move):
     if player_move < 1 or player_move > 3:
         print('That\'s not a valid move!')
-        return game_loop(sticks, current_player)
-    return sticks -= player_move
+        return player_move(sticks)
+    sticks -= player_move
+    return sticks
+
+def end_game(current_player):
+    pass
 
 def main():
-    pass
+    sticks,player1,player2 = game_setup()
+    while sticks > 0:
+        sticks_out = int(input('Hi {}! Please select a number of sticks, 1-3'.format(player1)))
+        while player_move  not in range(1,4):
+            print('That\'s not a valid move!')
+            player_move = int(input('Hi {}! Please select a number of sticks, 1-3'.format(player1)))
+        player_move(sticks, sticks_out)
+        if sticks < 1:
+            end_game(player1)
+        sticks_out = int(input('Hi {}! Please select a number of sticks, 1-3'.format(player1)))
+        while player_move  not in range(1,4):
+            print('That\'s not a valid move!')
+            player_move = int(input('Hi {}! Please select a number of sticks, 1-3'.format(player1)))
+        player_move(sticks, sticks_out)
+    end_game(player2)
+
+
 
 
 if __name__ == '__main__':
