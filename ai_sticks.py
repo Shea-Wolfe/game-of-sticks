@@ -26,6 +26,7 @@ def end_game(current_player, ai_dict):
     '''Takes the losing player as an arguements
     checks to see if the player wants to play again, if yes it runs the main loop
     if no it breaks the main loop which exits the program.'''
+    print(ai_dict)
     credit = input('You lose {}!  Would you like to play again? enter [y]es or [n]o >'.format(current_player)).lower()
     if credit == 'y' or credit == 'yes':
         return main(ai_dict)
@@ -40,7 +41,7 @@ def ai_dict_changes(ai_dict, ai_choices, ai_win):
             ai_dict[key].append(ai_choices[key])
     else:
         for key in ai_choices:
-            if len(ai_dict[key]) < 2:
+            if ai_dict[key].count(ai_choices[key]) == 1:
                 pass
             else:
                 ai_dict[key].remove(ai_choices[key])
