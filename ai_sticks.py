@@ -40,10 +40,9 @@ def end_game(current_player, ai_dict):
     '''Takes the losing player as an arguements
     checks to see if the player wants to play again, if yes it runs the main loop
     if no it breaks the main loop which exits the program.'''
-    print(ai_dict)
     credit = input('You lose {}!  Would you like to play again? enter [y]es or [n]o >'.format(current_player)).lower()
     if credit == 'y' or credit == 'yes':
-        return player_split(ai_dict)
+        return players_split(ai_dict)
     else:
         return True
 
@@ -100,13 +99,28 @@ def get_ai_dict():
     Value for each key is the same, a list of ints one two and three.'''
     return {key: [1,2,3] for key in range(1,101)}
 
+def get_sticks(sticks, player):
+    try:
+        sticks_out = int(input('Hi {}!  There are {} sticks remaining \nPlease select a number of sticks, 1-3 > '.format(player,sticks)))
+    except:
+        print('That\'s not a number! Try again!')
+        return get_sticks(sticks, player)
+    if sticks_out not in range(1,4):
+        print('That\'s not a valid move!')
+        return get_sticks(sticks, player)
+    return sticks_out
+
 
 def players_split(ai_dict):
     '''inform player turn and ask for # sticks to remove
     check to see if player removed the last stick
     if True, inform player he loses
     else continue'''
-    players = int(input('Please enter number of players [1], or [2] > '))
+    try:
+        players = int(input('Please enter number of players [1], or [2] > '))
+    except:
+        print('That\'s not a number!  Try again!')
+        return player_split(ai_dict)
     while  players > 2 or players < 1:
         players = int(input('I\'m sorry I didn\'t get that, was that [1] or [2] players? > '))
     sticks, player1, player2 = game_setup(players)
@@ -117,30 +131,22 @@ def players_split(ai_dict):
 
 def p_v_p_game_loop(sticks, player1, player2, ai_dict):
     while sticks > 0:
-        sticks_out = int(input('Hi {}!  There are {} sticks remaining \nPlease select a number of sticks, 1-3 > '.format(player1,sticks)))
-        while sticks_out not in range(1,4):
-            print('That\'s not a valid move!')
-            sticks_out = int(input('As a reminder {} there are {} sticks remaing. \nPlease select a number of sticks, 1-3 > '.format(player1, sticks)))
+        sticks_out = get_sticks(sticks, player1)
         sticks = player_move(sticks, sticks_out)
         if sticks < 1:
             if end_game(player1, ai_dict):
                 sys.exit()
-        sticks_out = int(input('Hi {}!  There are {} sticks remaining \nPlease select a number of sticks, 1-3 > '.format(player2, sticks)))
-        while sticks_out not in range(1,4):
-            print('That\'s not a valid move!')
-            sticks_out = int(input('As a reminder {} there are {} sticks remaing. \nPlease select a number of sticks, 1-3 > '.format(player2, sticks)))
+        sticks_out = get_sticks(sticks, player2)
         sticks = player_move(sticks, sticks_out)
         if sticks <1:
             if end_game(player2, ai_dict):
                 sys.exit()
 
+
 def p_v_ai_game_loop(sticks, player1, player2, ai_dict):
     ai_choices = {}
     while sticks > 0:
-        sticks_out = int(input('Hi {}!  There are {} sticks remaining \nPlease select a number of sticks, 1-3 > '.format(player1,sticks)))
-        while sticks_out not in range(1,4):
-            print('That\'s not a valid move!')
-            sticks_out = int(input('As a reminder {} there are {} sticks remaing. \nPlease select a number of sticks, 1-3 > '.format(player1, sticks)))
+        sticks_out = get_sticks(sticks, player1)
         sticks = player_move(sticks, sticks_out)
         if sticks < 1:
             ai_dict = ai_dict_changes(ai_dict, ai_choices, True)
