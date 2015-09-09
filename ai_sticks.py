@@ -101,7 +101,8 @@ def players_split(ai_dict):
     sticks,player1,player2 = game_setup()
     if players == 2:
         game_loop(sticks, player1, player2, ai_dict)
-    else p_v_ai_game_loop(sticks, player1, player2, ai_dict)
+    else:
+         p_v_ai_game_loop(sticks, player1, player2, ai_dict)
 
 def p_v_ai_game_loop(sticks, player1, player2, ai_dict):
     ai_choices = {}
@@ -145,6 +146,8 @@ def ai_game_loop(ai_dict, difficulty, no_player=True):
             difficulty += 1
             if end_game_ai(ai_dict, difficulty):
                 break
+
+
 def difficulty():
     difficulty = input('Please select how difficult you would like the ai to be. [e]asy, [m]edium, or [h]ard > ').lower()
     if difficulty not in 'emh':
