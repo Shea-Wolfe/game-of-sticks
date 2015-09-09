@@ -1,5 +1,6 @@
 import random
 import sys
+
 def game_setup(players):
     '''Takes one arguement, the players (one or two).
     Gets the player names and how many sticks the game will be played with'''
@@ -110,7 +111,6 @@ def get_sticks(sticks, player):
         return get_sticks(sticks, player)
     return sticks_out
 
-
 def players_split(ai_dict):
     '''inform player turn and ask for # sticks to remove
     check to see if player removed the last stick
@@ -141,7 +141,6 @@ def p_v_p_game_loop(sticks, player1, player2, ai_dict):
         if sticks <1:
             if end_game(player2, ai_dict):
                 sys.exit()
-
 
 def p_v_ai_game_loop(sticks, player1, player2, ai_dict):
     ai_choices = {}
@@ -182,7 +181,6 @@ def ai_game_loop(ai_dict, difficulty):
             if end_game_ai(ai_dict, difficulty):
                 break
 
-
 def difficulty():
     difficulty = input('Please select how difficult you would like the ai to be. [e]asy, [m]edium, or [h]ard > ').lower()
     if difficulty not in 'emh':
@@ -193,6 +191,7 @@ def difficulty():
         return 200
     else:
         return 0
+
 def main(ai_dict, difficulty):
     while difficulty < 250:
         ai_game_loop(ai_dict, difficulty)
